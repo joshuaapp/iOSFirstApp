@@ -40,27 +40,39 @@ class ViewController: UIViewController {
         if(!gameWon){
             let firstCardRandNum = Int(arc4random_uniform(13))
             let secondCardRandNum = Int(arc4random_uniform(13))
-            
+            //if the player has selected the first card then decide whether it is higher or not
+            //and issue a point accordingly
             if(sender.isEqual(self.firstCard)){
                 transition(from: firstCard, too: cardNames[firstCardRandNum])
-            }
+                //compare two cards to determine winner
+                if(firstCardRandNum > secondCardRandNum){
+                    self.playerScore += 1
+                    self.playerScoreLabel.text = String(playerScore)
+                }
+                else if(firstCardRandNum < secondCardRandNum){
+                    self.enemyScore += 1
+                    self.enemyScoreLabel.text = String(enemyScore)
+                }
+                else{
+                    //both cards are same value, therefore do nothing
+                }            }
+                
+            //if player picks card2
             else if(sender.isEqual(self.secondCard)){
                 transition(from: secondCard, too: cardNames[secondCardRandNum])
+                //compare two cards to determine winner
+                if(firstCardRandNum > secondCardRandNum){
+                    self.enemyScore += 1
+                    self.enemyScoreLabel.text = String(enemyScore)
+                }
+                else if(firstCardRandNum < secondCardRandNum){
+                    self.playerScore += 1
+                    self.playerScoreLabel.text = String(playerScore)
+                }
+                else{
+                    //both cards are same value, therefore do nothing
+                }
             }
-            //compare two cards to determine winner
-            if(firstCardRandNum > secondCardRandNum){
-                self.playerScore += 1
-                self.playerScoreLabel.text = String(playerScore)
-            }
-                
-            else if(firstCardRandNum < secondCardRandNum){
-                self.enemyScore += 1
-                self.enemyScoreLabel.text = String(enemyScore)
-            }
-            else{
-                //both cards are same value, therefore do nothing
-            }
-            
             //transition flip the enemy card
             if(sender.isEqual(firstCard)){
                 transition(from: secondCard, too: cardNames[secondCardRandNum])
